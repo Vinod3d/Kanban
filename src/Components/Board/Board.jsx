@@ -1,6 +1,7 @@
 import React from 'react'
 import './Board.css'
 import {MoreHorizontal} from 'react-feather'
+import Card from '../Card/Card'
 
 const Board = () => {
   return (
@@ -11,8 +12,14 @@ const Board = () => {
         </div>
 
         <div className="board_cards">
-            <h1>Card 1</h1>
-            <h1>Card 2</h1>
+            <Card/>
+            <Card/>
+            <Card/>
+            <Card/>
+            <Card/>
+            <Card/>
+            <Card/>
+            <Card/>
         </div>
     </div>
   )
