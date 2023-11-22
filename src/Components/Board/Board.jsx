@@ -2,6 +2,7 @@ import React from 'react'
 import './Board.css'
 import {MoreHorizontal} from 'react-feather'
 import Card from '../Card/Card'
+import Editable from '../Editable/Editable'
 
 const Board = () => {
   return (
@@ -11,7 +12,7 @@ const Board = () => {
             <MoreHorizontal/>
         </div>
 
-        <div className="board_cards">
+        <div className="board_cards custom-scroll">
             <Card/>
             <Card/>
             <Card/>
@@ -20,6 +21,11 @@ const Board = () => {
             <Card/>
             <Card/>
             <Card/>
+            <Editable
+              displayClass="board_cards_add"
+              text="Add Card"
+              placeholder="Enter Card Title"
+            />
         </div>
     </div>
   )
