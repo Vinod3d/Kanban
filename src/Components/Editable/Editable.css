@@ -3,7 +3,7 @@
 }
 
 .editable_display{
-    background-color: #fff ;
+    background-color: #f8f8f8 ;
     border-radius: 3px;
     padding: 10px;
     text-align: center;
@@ -11,7 +11,7 @@
 }
 
 .editable_display:hover{
-    background-color: #ccc;
+    background-color: #ccc !important;
     /* background-color: #f8f8f8; */
 }
 

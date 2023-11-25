@@ -38,5 +38,20 @@
   min-width: fit-content;
   display: flex;
   gap: 30px;
-  
+}
+
+.app_boards_board{
+  min-width: 290px;
+  width: 290px;
+}
+
+
+.app_boards_board_add{
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 1px 2px  0 1px rgba(0, 0, 0, 0.15);
+}
+
+.app_boards_board_add:hover{
+  box-shadow: 1px 2px  0 1px #ccc;
 }

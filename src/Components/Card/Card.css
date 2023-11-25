@@ -23,8 +23,13 @@
     transition: 200ms;
 }
 
+.card_top_more{
+    position: relative;
+}
+
 .card:hover .card_top svg{
     opacity: 1;
+    cursor: pointer;
 }
 
 .card_title{
