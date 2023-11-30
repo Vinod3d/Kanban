@@ -1,0 +1,9 @@
+.cardinfo {
+    padding: 30px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.
