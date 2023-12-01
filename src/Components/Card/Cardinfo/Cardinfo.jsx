@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import './Cardinfo.css'
 import Modal from '../../Modal/Modal'
-import { Calendar, List, Tag, Type } from 'react-feather'
+import { Calendar, CheckSquare, List, Tag, Trash, Type } from 'react-feather'
 import Editable from '../../Editable/Editable'
+import Chip from '../../Chip/Chip'
 
 const Cardinfo = (props) => {
     const colors = [
@@ -16,6 +17,7 @@ const Cardinfo = (props) => {
     ];
 
     const [activeColor, setActiveColor] = useState("");
+    const {title, labels, desc, date, tasks} = props.card
   return (
       <Modal onClose={()=>props.onClose()}>
         <div className="cardinfo">
@@ -26,7 +28,8 @@ const Cardinfo = (props) => {
                 </div>
                 <div className="cardinfo_box_body">
                     <Editable 
-                        text={"Add Title"} 
+                        text={title} 
+                        default={title}
                         placeholder="Enter Title"
                         buttonText="Set Title"
                     />
@@ -40,7 +43,8 @@ const Cardinfo = (props) => {
                 </div>
                 <div className="cardinfo_box_body">
                     <Editable 
-                    text={"Add Description"} 
+                    text={desc} 
+                    default={desc}
                     placeholder="Enter Description" 
                     buttonText="Set Description"
                     />
@@ -53,7 +57,8 @@ const Cardinfo = (props) => {
                     Date
                 </div>
                 <div className="cardinfo_box_body">
-                   <input type="date" />
+                   <input type="date" 
+                   defaultValue={date ? new Date(date).toISOString().substr(0, 10) : ""}/>
                 </div>
             </div>
 
@@ -61,6 +66,19 @@ const Cardinfo = (props) => {
                 <div className="cardinfo_box_title"> 
                     <Tag/>
                     Labels
+                </div>
+                <div className="cardinfo_box_labels">
+                    {
+                        labels?.map((item, index)=>(
+                            <Chip 
+                            close 
+                            onClose={()=>console.log("chip")} 
+                            key={item.tex+index}
+                            color={item.color}
+                            text={item.text}
+                            />
+                        ))
+                    }
                 </div>
                 <div className="cardinfo_box_colors">
                     {colors.map((item, index)=> <li key={index} style={{backgroundColor:item}}
@@ -70,9 +88,36 @@ const Cardinfo = (props) => {
                 </div>
                 <div className="cardinfo_box_body">
                 <Editable 
-                    text={"Add Title"} 
-                    placeholder="Enter Title"
+                    text={"Add Label"} 
+                    placeholder="Enter Label"
                     buttonText="Add Label"
+                />
+                </div>
+            </div>
+
+            <div className="cardinfo_box">
+                <div className="cardinfo_box_title"> 
+                    <CheckSquare/>
+                    Tasks
+                </div>
+                <div className="cardinfo_box_progress-bar">
+                    <div className="cardinfo_box_progress" style={{width : "30%"}}/>
+                </div>
+                <div className="cardinfo_box_list">
+                    {
+                        tasks?.map((item)=>(<div key={item.id} className="cardinfo_task">
+                        <input type="checkbox" defaultValue={item.completed}/>
+                        <p>{item.text}</p>
+                        <Trash/>
+                    </div>))
+                    }
+                    
+                </div>
+                <div className="cardinfo_box_body">
+                <Editable 
+                    text={"Add Task"} 
+                    placeholder="Enter Task"
+                    buttonText="Add Task"
                 />
                 </div>
             </div>
