@@ -1,7 +1,7 @@
 import React from 'react'
 import './Modal.css'
 const Modal = (props) => {
-    console.log(props)
+    // console.log(props)
   return (
     <div 
         className='modal'
