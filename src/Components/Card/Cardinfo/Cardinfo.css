@@ -20,6 +20,11 @@
     gap: 10px;
 }
 
+.cardinfo_box_labels{
+    display: flex;
+    gap: 10px;
+}
+
 .cardinfo_box_body{
     width: fit-content;
 }
