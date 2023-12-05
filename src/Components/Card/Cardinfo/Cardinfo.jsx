@@ -39,10 +39,35 @@ const Cardinfo = (props) => {
     };
 
     const removeLabel=(text)=>{
-        const index = values.labels?.findIndex((item)=> item.text === text);
-        if(index<0) return;
+        const updatedLabels = values.labels?.filter((item) => item.text !== text);
+        setValues({ ...values, labels: updatedLabels });
+    };
 
-        setValues({...values, labels: values.labels?.splice(index, 1)});
+    const addTask=(value)=>{
+        const task={
+            id:Date.now() + Math.random(),
+            text:value,
+            completed:false
+        }
+
+        setValues({...values, tasks: [...values.tasks, task]})
+    }
+
+    const removeTask=(text)=>{
+        const updatedTasks = values.tasks?.filter((item)=> item.text !== text);
+       
+        setValues({...values, tasks: updatedTasks});
+        
+    }
+
+
+    const updateTask = (id, completed) => {
+        const index = values.tasks?.findIndex((item)=> item.id === id);
+        if(index < 0) return;
+
+        const tempTasks = [...values.tasks];
+        tempTasks[index].completed = completed;
+        setValues({...values, tasks: tempTasks})
     };
 
     useEffect(()=>{
@@ -62,7 +87,7 @@ const Cardinfo = (props) => {
                         default={values.title}
                         placeholder="Enter Title"
                         buttonText="Set Title"
-                        onSubmit={(value)=>setValue({...values, title : value})}
+                        onSubmit={(value)=>setValues({...values, title : value})}
                     />
                 </div>
             </div>
@@ -78,7 +103,7 @@ const Cardinfo = (props) => {
                     default={values.desc}
                     placeholder="Enter Description" 
                     buttonText="Set Description"
-                    onSubmit={(value)=>setValue({...values, desc : value})}
+                    onSubmit={(value)=>setValues({...values, desc : value})}
                     />
                 </div>
             </div>
@@ -91,7 +116,7 @@ const Cardinfo = (props) => {
                 <div className="cardinfo_box_body">
                    <input type="date" 
                    defaultValue={values.date ? new Date(values.date).toISOString().substr(0, 10) : ""}
-                   onChange={(event)=> setValue({...values, date: event.target.value})}
+                   onChange={(event)=> setValues({...values, date: event.target.value})}
                    />
                 </div>
             </div>
@@ -107,7 +132,7 @@ const Cardinfo = (props) => {
                             <Chip 
                             close 
                             onClose={()=> removeLabel(item.text)} 
-                            key={item.tex+index}
+                            key={item.text+index}
                             color={item.color}
                             text={item.text}
                             />
@@ -136,14 +161,24 @@ const Cardinfo = (props) => {
                     Tasks
                 </div>
                 <div className="cardinfo_box_progress-bar">
-                    <div className="cardinfo_box_progress" style={{width : calculatePercent()+"%"}}/>
+                    <div 
+                        className="cardinfo_box_progress" 
+                        style={{
+                            width : calculatePercent()+"%",
+                            backgroundColor: calculatePercent() == "100" ? "limegreen" : ""
+                        }}
+                    />
                 </div>
                 <div className="cardinfo_box_list">
                     {
                         values.tasks?.map((item)=>(<div key={item.id} className="cardinfo_task">
-                        <input type="checkbox" defaultValue={item.completed}/>
+                        <input 
+                            type="checkbox" 
+                            defaultChecked={item.completed}
+                            onChange={(event)=>updateTask(item.id, event.target.checked)}
+                        />
                         <p>{item.text}</p>
-                        <Trash/>
+                        <Trash onClick={()=>removeTask(item.text)}/>
                     </div>))
                     }
                     
@@ -153,6 +188,7 @@ const Cardinfo = (props) => {
                     text={"Add Task"} 
                     placeholder="Enter Task"
                     buttonText="Add Task"
+                    onSubmit={(value)=>addTask(value)}
                 />
                 </div>
             </div>

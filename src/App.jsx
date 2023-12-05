@@ -1,43 +1,45 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Board from './Components/Board/Board'
 import Editable from './Components/Editable/Editable'
 
 function App() {
-  const [boards, setBoards]= useState([
-    {
-      id:Date.now() + Math.random()*2,
-      title:"To Do",
-      cards:[
-        {
-          id : Date.now()+Math.random(),
-          title: "Card 1",
-          tasks : [],
-          labels : [
-            {
-              text : "frontend",
-              color: "blue",
-            },
-          ],
-          desc : "hlojhs fslhl fswlhlh",
-          date: "",
-        },
-        {
-          id : Date.now()+Math.random(),
-          title: "Card 2",
-          tasks : [],
-          labels : [
-            {
-              text : "backend",
-              color: "brown",
-            },
-          ],
-          desc : "hlojhs fslhl fswlhlh",
-          date: "",
-        },
-      ]
-    }
-  ]);
+  // const [boards, setBoards]= useState([
+  //   {
+  //     id:Date.now() + Math.random()*2,
+  //     title:"To Do",
+  //     cards:[
+  //       {
+  //         id : Date.now()+Math.random(),
+  //         title: "Card 1",
+  //         tasks : [],
+  //         labels : [
+  //           {
+  //             text : "frontend",
+  //             color: "blue",
+  //           },
+  //         ],
+  //         desc : "hlojhs fslhl fswlhlh",
+  //         date: "",
+  //       },
+  //       {
+  //         id : Date.now()+Math.random(),
+  //         title: "Card 2",
+  //         tasks : [],
+  //         labels : [
+  //           {
+  //             text : "backend",
+  //             color: "brown",
+  //           },
+  //         ],
+  //         desc : "hlojhs fslhl fswlhlh",
+  //         date: "",
+  //       },
+  //     ]
+  //   }
+  // ]);
+
+  const [boards, setBoards]= useState(JSON.parse(localStorage.getItem("kanban")) || [])
 
   const [target, setTarget] = useState([
     {cid: "",
@@ -135,6 +137,10 @@ function App() {
     tempBoards[bIndex].cards[cIndex] = card;
     setBoards(tempBoards);
   }
+
+  useEffect(()=>{
+    localStorage.setItem("kanban", JSON.stringify(boards));
+  }, [boards]);
   return (
     <div className='app'>
         <div className="app_navbar">
